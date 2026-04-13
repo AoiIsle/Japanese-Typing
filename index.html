@@ -2,8 +2,21 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>日语打字道场 - N2完全版</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>日语打字道场 - N2</title>
+    
+    <!-- ========== 图标配置（添加到主屏幕时使用） ========== -->
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    <link rel="apple-touch-icon" href="apple-icon.png">
+    <meta name="apple-mobile-web-app-title" content="日语打字">
+    <meta name="application-name" content="日语打字">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a1a2e">
+    <!-- ================================================= -->
+    
     <style>
         * {
             user-select: none;
@@ -16,7 +29,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Segoe UI', 'Noto Sans JP', 'Poppins', sans-serif;
+            font-family: 'Segoe UI', 'Noto Sans JP', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
             margin: 0;
             padding: 20px;
         }
@@ -25,7 +38,7 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 48px;
-            padding: 25px 35px;
+            padding: 20px 25px;
             box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2);
             width: 950px;
             max-width: 100%;
@@ -35,20 +48,20 @@
             text-align: center;
             color: #fff;
             margin: 0 0 5px;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
         }
 
         .sub {
             text-align: center;
             color: #aaa;
-            margin-bottom: 20px;
-            font-size: 0.8rem;
+            margin-bottom: 15px;
+            font-size: 0.7rem;
         }
 
         .control-bar {
             display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-bottom: 15px;
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
@@ -63,17 +76,12 @@
             background: #facc15;
             color: #0f172a;
             border: none;
-            padding: 8px 24px;
+            padding: 6px 16px;
             border-radius: 40px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: 0.2s;
-        }
-
-        .level-main-btn:hover {
-            background: #eab308;
-            transform: scale(0.97);
         }
 
         .level-dropdown-content {
@@ -93,11 +101,11 @@
             width: 100%;
             background: none;
             border: none;
-            padding: 10px 20px;
+            padding: 8px 16px;
             text-align: left;
             color: white;
             cursor: pointer;
-            transition: 0.2s;
+            font-size: 0.85rem;
         }
 
         .level-dropdown-content button:hover {
@@ -115,49 +123,43 @@
 
         .game-config {
             background: #0f172a;
-            padding: 8px 15px;
+            padding: 5px 12px;
             border-radius: 40px;
             display: flex;
-            gap: 12px;
+            gap: 8px;
             align-items: center;
-            flex-wrap: wrap;
         }
 
         .game-config label {
             color: #94a3b8;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         #questionCount {
             background: #1e293b;
             border: 1px solid #475569;
             color: white;
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 20px;
-            width: 60px;
+            width: 55px;
             text-align: center;
+            font-size: 0.85rem;
         }
 
         .game-control-buttons {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
 
         .control-btn {
             background: #facc15;
             color: #0f172a;
             border: none;
-            padding: 8px 20px;
+            padding: 6px 16px;
             border-radius: 40px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: 0.2s;
-        }
-
-        .control-btn:hover {
-            background: #eab308;
-            transform: scale(0.97);
+            font-size: 0.85rem;
         }
 
         .reset-btn {
@@ -165,17 +167,13 @@
             color: white;
         }
 
-        .reset-btn:hover {
-            background: #334155;
-        }
-
         .mode-indicator {
             background: #0f172a;
             border-radius: 30px;
-            padding: 6px 15px;
+            padding: 5px 12px;
             margin-bottom: 15px;
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         .mode-normal { color: #4ade80; }
@@ -185,45 +183,43 @@
         .japanese-card {
             background: #0f172a;
             border-radius: 32px;
-            padding: 35px 20px;
+            padding: 25px 15px;
             text-align: center;
-            margin-bottom: 25px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
             border: 1px solid #334155;
         }
 
         .jp-word {
-            font-size: 4rem;
+            font-size: 3rem;
             font-weight: 700;
             color: #facc15;
             text-shadow: 0 4px 10px rgba(250,204,21,0.3);
-            letter-spacing: 4px;
+            letter-spacing: 2px;
             word-break: break-word;
         }
 
         .hint-area {
-            margin-top: 20px;
+            margin-top: 15px;
             display: flex;
             justify-content: center;
-            gap: 25px;
-            align-items: center;
+            gap: 15px;
             flex-wrap: wrap;
         }
 
         .hint-item {
             background: #1e293b;
             border-radius: 40px;
-            padding: 8px 18px;
+            padding: 5px 12px;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .hint-content {
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: bold;
             color: #facc15;
-            min-width: 100px;
+            min-width: 80px;
             transition: all 0.2s;
         }
 
@@ -236,32 +232,19 @@
             background: transparent;
             border: none;
             cursor: pointer;
-            transition: 0.2s;
-            font-size: 2rem;
+            font-size: 1.6rem;
             padding: 0;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .teddy-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .teddy-icon {
-            font-size: 2rem;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
 
         .input-area {
             background: #1e293b;
             border-radius: 60px;
-            padding: 5px 20px;
+            padding: 5px 15px;
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border: 1px solid #475569;
-            gap: 15px;
+            gap: 10px;
         }
 
         .input-area:focus-within {
@@ -273,9 +256,9 @@
             flex: 1;
             background: transparent;
             border: none;
-            padding: 18px 0;
-            font-size: 1.6rem;
-            font-family: 'Courier New', monospace;
+            padding: 14px 0;
+            font-size: 1.3rem;
+            font-family: monospace;
             font-weight: 600;
             color: #f1f5f9;
             outline: none;
@@ -285,47 +268,34 @@
             background: #facc15;
             color: #0f172a;
             border: none;
-            padding: 8px 24px;
+            padding: 6px 18px;
             border-radius: 40px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 1rem;
-            transition: 0.2s;
-        }
-
-        .submit-btn:hover {
-            background: #eab308;
-            transform: scale(0.97);
+            font-size: 0.9rem;
         }
 
         .progress-feedback {
             background: #0f172a;
             border-radius: 40px;
-            padding: 12px 20px;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
+            padding: 8px 15px;
+            margin-bottom: 15px;
+            font-size: 0.8rem;
             display: flex;
             justify-content: space-between;
-            align-items: center;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 8px;
         }
 
-        .match-status {
-            color: #cbd5e1;
-        }
-
-        .error-detail {
-            color: #f87171;
-            font-size: 0.85rem;
-        }
+        .match-status { color: #cbd5e1; }
+        .error-detail { color: #f87171; }
 
         .prefix-hint {
             color: #94a3b8;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-family: monospace;
-            margin-top: -10px;
-            margin-bottom: 15px;
+            margin-top: -8px;
+            margin-bottom: 12px;
         }
 
         .prefix-hint.correct { color: #4ade80; }
@@ -333,8 +303,8 @@
 
         .stats {
             display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 15px;
             flex-wrap: wrap;
         }
 
@@ -342,19 +312,18 @@
             background: #0f172a;
             flex: 1;
             text-align: center;
-            padding: 12px 8px;
-            border-radius: 28px;
-            min-width: 80px;
+            padding: 8px 5px;
+            border-radius: 20px;
+            min-width: 65px;
         }
 
         .stat-label {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: #94a3b8;
-            margin-bottom: 5px;
         }
 
         .stat-value {
-            font-size: 1.8rem;
+            font-size: 1.3rem;
             font-weight: bold;
         }
 
@@ -367,97 +336,85 @@
         .library-progress {
             background: #0f172a;
             border-radius: 30px;
-            padding: 10px 15px;
-            margin-bottom: 20px;
+            padding: 8px 12px;
+            margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
 
         .progress-text {
             color: #94a3b8;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
         }
 
         .progress-bar-bg {
             flex: 1;
-            height: 8px;
+            height: 6px;
             background: #334155;
-            border-radius: 4px;
+            border-radius: 3px;
             overflow: hidden;
         }
 
         .progress-bar-fill {
             height: 100%;
             background: #facc15;
-            border-radius: 4px;
+            border-radius: 3px;
             transition: width 0.3s ease;
         }
 
         .button-group {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         button {
             background: #334155;
             border: none;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 40px;
             font-weight: bold;
             color: white;
             cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.9rem;
-        }
-
-        button:hover {
-            background: #475569;
-            transform: scale(0.97);
+            font-size: 0.8rem;
         }
 
         .word-banks {
             display: flex;
-            gap: 12px;
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 15px;
         }
 
         .bank-panel {
             flex: 1;
             background: #0f172a;
             border-radius: 20px;
-            padding: 12px;
-            max-height: 250px;
+            padding: 10px;
+            max-height: 200px;
             overflow-y: auto;
         }
 
         .bank-title {
             font-weight: bold;
             color: #facc15;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
+            margin-bottom: 6px;
+            font-size: 0.8rem;
             display: flex;
             justify-content: space-between;
-            align-items: center;
         }
 
         .bank-list {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: #cbd5e1;
         }
 
         .bank-item {
-            padding: 4px 6px;
+            padding: 3px 5px;
             border-bottom: 1px solid #334155;
-            cursor: pointer;
-        }
-
-        .bank-item:hover {
-            background: #1e293b;
         }
 
         .remove-btn {
@@ -465,36 +422,29 @@
             border: none;
             color: #f87171;
             cursor: pointer;
-            margin-left: 8px;
-            font-size: 0.7rem;
-            padding: 0 4px;
+            margin-left: 6px;
+            font-size: 0.65rem;
+            padding: 0 3px;
         }
 
         footer {
             text-align: center;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: #5b6e8c;
-            margin-top: 15px;
-        }
-
-        @media (max-width: 700px) {
-            .game-container { padding: 20px; }
-            .jp-word { font-size: 2.5rem; }
-            .stat-value { font-size: 1.2rem; }
-            .control-btn, .level-main-btn { padding: 6px 12px; font-size: 0.8rem; }
+            margin-top: 12px;
         }
     </style>
 </head>
 <body>
 
 <div class="game-container">
-    <h1>🐕‍🦺 日语打字道场 · N2完全版</h1>
-    <div class="sub">基于《N2汉字/词汇 考前对策》| 三轮复习机制</div>
+    <h1>🐕‍🦺 日语打字道场 · N2</h1>
+    <div class="sub">N2汉字词汇 | 三轮复习 | 错题本</div>
 
     <div class="control-bar">
         <div class="level-dropdown">
             <button class="level-main-btn" id="levelMainBtn">📖 N2词库 ▼</button>
-            <div class="level-dropdown-content" id="levelDropdown">
+            <div class="level-dropdown-content">
                 <button data-level="N5">N5 (待添加)</button>
                 <button data-level="N4">N4 (待添加)</button>
                 <button data-level="N3">N3 (待添加)</button>
@@ -503,73 +453,52 @@
             </div>
         </div>
         <div class="game-config">
-            <label>📝 本轮题数:</label>
+            <label>📝 题数:</label>
             <input type="number" id="questionCount" value="10" min="1" max="50">
         </div>
         <div class="game-control-buttons">
-            <button class="control-btn" id="startPauseBtn">▶ 开始游戏</button>
+            <button class="control-btn" id="startPauseBtn">▶ 开始</button>
             <button class="control-btn reset-btn" id="resetGameBtn">🔄 重置</button>
         </div>
     </div>
 
     <div class="mode-indicator">
         <span>⚡ 模式: </span><span id="modeText" class="mode-normal">未开始</span>
-        <span id="roundInfo" style="margin-left: 15px;"></span>
+        <span id="roundInfo" style="margin-left: 10px;"></span>
     </div>
 
     <div class="japanese-card">
         <div class="jp-word" id="jpWord">日本語</div>
         <div class="hint-area">
             <div class="hint-item">
-                <button class="teddy-btn" id="romajiTeddyBtn" title="咖啡泰迪 - 罗马音提示">
-                    <span class="teddy-icon">🐕‍🦺</span>
-                    <span style="font-size:0.8rem;">罗马音</span>
-                </button>
+                <button class="teddy-btn" id="romajiTeddyBtn">🐕‍🦺</button>
                 <div class="hint-content blurred" id="romajiHint">nihongo</div>
             </div>
             <div class="hint-item">
-                <button class="teddy-btn" id="kanaTeddyBtn" title="灰白泰迪 - 假名读音">
-                    <span class="teddy-icon">🐩</span>
-                    <span style="font-size:0.8rem;">假名读</span>
-                </button>
+                <button class="teddy-btn" id="kanaTeddyBtn">🐩</button>
                 <div class="hint-content blurred" id="kanaHint">にほんご</div>
             </div>
         </div>
     </div>
 
     <div class="input-area">
-        <span style="color:#94a3b8">⌨️ 输入罗马音:</span>
+        <span style="color:#94a3b8">⌨️ 罗马音:</span>
         <input type="text" id="userInput" placeholder="例: nihongo" autocomplete="off">
         <button class="submit-btn" id="submitBtn">↵ 提交</button>
     </div>
 
     <div class="progress-feedback">
-        <div class="match-status" id="matchStatus">✨ 点击开始游戏</div>
+        <div class="match-status" id="matchStatus">✨ 点击开始</div>
         <div class="error-detail" id="errorDetail"></div>
     </div>
-    <div class="prefix-hint" id="prefixHint">💡 输入罗马音后，这里会显示前缀匹配情况</div>
+    <div class="prefix-hint" id="prefixHint">💡 输入罗马音后显示前缀匹配</div>
 
     <div class="stats">
-        <div class="stat-card">
-            <div class="stat-label">✅ 本轮正确</div>
-            <div class="stat-value correct" id="correctCount">0</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">❌ 本轮错误</div>
-            <div class="stat-value wrong" id="wrongCount">0</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">📊 进度</div>
-            <div class="stat-value progress" id="progressCount">0/<span id="totalQ">0</span></div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">🔄 复习轮次</div>
-            <div class="stat-value round" id="roundNum">0</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">⭐ 得分</div>
-            <div class="stat-value score" id="scoreValue">0</div>
-        </div>
+        <div class="stat-card"><div class="stat-label">✅正确</div><div class="stat-value correct" id="correctCount">0</div></div>
+        <div class="stat-card"><div class="stat-label">❌错误</div><div class="stat-value wrong" id="wrongCount">0</div></div>
+        <div class="stat-card"><div class="stat-label">📊进度</div><div class="stat-value progress" id="progressCount">0/<span id="totalQ">0</span></div></div>
+        <div class="stat-card"><div class="stat-label">🔄轮次</div><div class="stat-value round" id="roundNum">0</div></div>
+        <div class="stat-card"><div class="stat-label">⭐得分</div><div class="stat-value score" id="scoreValue">0</div></div>
     </div>
 
     <div class="library-progress">
@@ -579,22 +508,16 @@
     </div>
 
     <div class="button-group">
-        <button id="addToFavoriteBtn">⭐ 收藏当前词</button>
+        <button id="addToFavoriteBtn">⭐ 收藏</button>
         <button id="clearFavoritesBtn">🗑️ 清空收藏</button>
         <button id="reviewWrongBankBtn" style="background:#f97316">📕 复习错题本</button>
     </div>
 
     <div class="word-banks">
-        <div class="bank-panel">
-            <div class="bank-title">📕 错题本 (三轮后仍未掌握的)</div>
-            <div class="bank-list" id="wrongList"></div>
-        </div>
-        <div class="bank-panel">
-            <div class="bank-title">⭐ 收藏本</div>
-            <div class="bank-list" id="favoriteList"></div>
-        </div>
+        <div class="bank-panel"><div class="bank-title">📕 错题本</div><div class="bank-list" id="wrongList"></div></div>
+        <div class="bank-panel"><div class="bank-title">⭐ 收藏本</div><div class="bank-list" id="favoriteList"></div></div>
     </div>
-    <footer>🐕 咖啡泰迪=罗马音 | 🐩 灰白泰迪=假名读音 | 完成整轮后才复习错词 | 连续三轮错误的词进入错题本</footer>
+    <footer>🐕 点狗头显示提示 | 完成整轮后复习错词 | 三轮错误进错题本</footer>
 </div>
 
 <script>
@@ -617,20 +540,18 @@
         {jp:"異常", romaji:"ijou", kana:"いじょう"},{jp:"症状", romaji:"shoujou", kana:"しょうじょう"},
         {jp:"診察", romaji:"shinsatsu", kana:"しんさつ"},{jp:"診断", romaji:"shindan", kana:"しんだん"},
         {jp:"手術", romaji:"shujutsu", kana:"しゅじゅつ"},{jp:"花粉症", romaji:"kafunshou", kana:"かふんしょう"},
-        {jp:"虫歯", romaji:"mushiba", kana:"むしば"},{jp:"リハビリ", romaji:"rihabiri", kana:"りはびり"},
-        {jp:"負担", romaji:"futan", kana:"ふたん"},{jp:"担当", romaji:"tantou", kana:"たんとう"},
-        {jp:"共通", romaji:"kyoutsuu", kana:"きょうつう"},{jp:"経過", romaji:"keika", kana:"けいか"},
-        {jp:"責任", romaji:"sekinin", kana:"せきにん"},{jp:"分別", romaji:"bunbetsu", kana:"ぶんべつ"},
-        {jp:"原料", romaji:"genryou", kana:"げんりょう"},{jp:"燃料", romaji:"nenryou", kana:"ねんりょう"},
-        {jp:"回収", romaji:"kaishuu", kana:"かいしゅう"},{jp:"迷惑", romaji:"meiwaku", kana:"めいわく"},
-        {jp:"願書", romaji:"gansho", kana:"がんしょ"},{jp:"明細", romaji:"meisai", kana:"めいさい"},
+        {jp:"虫歯", romaji:"mushiba", kana:"むしば"},{jp:"負担", romaji:"futan", kana:"ふたん"},
+        {jp:"担当", romaji:"tantou", kana:"たんとう"},{jp:"共通", romaji:"kyoutsuu", kana:"きょうつう"},
+        {jp:"経過", romaji:"keika", kana:"けいか"},{jp:"責任", romaji:"sekinin", kana:"せきにん"},
+        {jp:"分別", romaji:"bunbetsu", kana:"ぶんべつ"},{jp:"原料", romaji:"genryou", kana:"げんりょう"},
+        {jp:"燃料", romaji:"nenryou", kana:"ねんりょう"},{jp:"回収", romaji:"kaishuu", kana:"かいしゅう"},
+        {jp:"迷惑", romaji:"meiwaku", kana:"めいわく"},{jp:"願書", romaji:"gansho", kana:"がんしょ"},
         {jp:"検診", romaji:"kenshin", kana:"けんしん"},{jp:"移転", romaji:"iten", kana:"いてん"},
         {jp:"更新", romaji:"koushin", kana:"こうしん"},{jp:"事務", romaji:"jimu", kana:"じむ"},
-        {jp:"周り", romaji:"mawari", kana:"まわり"},{jp:"持参", romaji:"jisan", kana:"じさん"},
-        {jp:"平等", romaji:"byoudou", kana:"びょうどう"},{jp:"迷子", romaji:"maigo", kana:"まいご"},
-        {jp:"協力", romaji:"kyouryoku", kana:"きょうりょく"},{jp:"有効", romaji:"yuukou", kana:"ゆうこう"},
-        {jp:"延びる", romaji:"nobiru", kana:"のびる"},{jp:"開封", romaji:"kaifuu", kana:"かいふう"},
-        {jp:"移り", romaji:"utsuri", kana:"うつり"},{jp:"評判", romaji:"hyouban", kana:"ひょうばん"},
+        {jp:"持参", romaji:"jisan", kana:"じさん"},{jp:"平等", romaji:"byoudou", kana:"びょうどう"},
+        {jp:"迷子", romaji:"maigo", kana:"まいご"},{jp:"協力", romaji:"kyouryoku", kana:"きょうりょく"},
+        {jp:"有効", romaji:"yuukou", kana:"ゆうこう"},{jp:"延びる", romaji:"nobiru", kana:"のびる"},
+        {jp:"開封", romaji:"kaifuu", kana:"かいふう"},{jp:"評判", romaji:"hyouban", kana:"ひょうばん"},
         {jp:"判断", romaji:"handan", kana:"はんだん"},{jp:"誤る", romaji:"ayamaru", kana:"あやまる"},
         {jp:"批判", romaji:"hihan", kana:"ひはん"},{jp:"子孫", romaji:"shison", kana:"しそん"},
         {jp:"温暖化", romaji:"ondanka", kana:"おんだんか"},{jp:"信頼", romaji:"shinrai", kana:"しんらい"},
@@ -653,93 +574,62 @@
         {jp:"技", romaji:"waza", kana:"わざ"},{jp:"腕", romaji:"ude", kana:"うで"},
         {jp:"無意識", romaji:"muishiki", kana:"むいしき"},{jp:"入学金", romaji:"nyuugakukin", kana:"にゅうがくきん"},
         {jp:"残業", romaji:"zangyou", kana:"ざんぎょう"},{jp:"人類", romaji:"jinrui", kana:"じんるい"},
-        {jp:"プライド", romaji:"puraido", kana:"ぷらいど"},{jp:"許可証", romaji:"kyokashou", kana:"きょかしょう"},
-        {jp:"賞味期限", romaji:"shoumikigen", kana:"しょうみきげん"},{jp:"具体的", romaji:"gutaiteki", kana:"ぐたいてき"},
-        {jp:"説明", romaji:"setsumei", kana:"せつめい"},{jp:"打ち合わせ", romaji:"uchiawase", kana:"うちあわせ"},
-        {jp:"検索", romaji:"kensaku", kana:"けんさく"},{jp:"支給", romaji:"shikyuu", kana:"しきゅう"},
-        {jp:"消去", romaji:"shoukyo", kana:"しょうきょ"},{jp:"組む", romaji:"kumu", kana:"くむ"},
-        {jp:"要領", romaji:"youryou", kana:"ようりょう"},{jp:"出世", romaji:"shusse", kana:"しゅっせ"}
+        {jp:"許可証", romaji:"kyokashou", kana:"きょかしょう"},{jp:"賞味期限", romaji:"shoumikigen", kana:"しょうみきげん"},
+        {jp:"具体的", romaji:"gutaiteki", kana:"ぐたいてき"},{jp:"説明", romaji:"setsumei", kana:"せつめい"},
+        {jp:"打ち合わせ", romaji:"uchiawase", kana:"うちあわせ"},{jp:"検索", romaji:"kensaku", kana:"けんさく"},
+        {jp:"支給", romaji:"shikyuu", kana:"しきゅう"},{jp:"消去", romaji:"shoukyo", kana:"しょうきょ"},
+        {jp:"組む", romaji:"kumu", kana:"くむ"},{jp:"要領", romaji:"youryou", kana:"ようりょう"},
+        {jp:"出世", romaji:"shusse", kana:"しゅっせ"}
     ];
 
     const VOCAB_LIBRARY = { N5: [], N4: [], N3: [], N2: N2_VOCAB, N1: [] };
-
-    let currentLevel = "N2";
-    let masterWordList = [...N2_VOCAB];
-    let currentRoundQuestions = [];
-    let currentIndex = 0;
-    let currentWordObj = null;
-    let gameActive = false;
-    let isPaused = false;
-    let currentMode = "normal";
-    let currentRoundNum = 1;
+    let currentLevel = "N2", masterWordList = [...N2_VOCAB];
+    let currentRoundQuestions = [], currentIndex = 0, currentWordObj = null;
+    let gameActive = false, isPaused = false, currentMode = "normal", currentRoundNum = 1;
     let correctInRound = 0, wrongInRound = 0, roundScore = 0;
     let wrongBank = [], favoriteBank = [];
     let romajiVisible = false, kanaVisible = false;
 
-    const jpWordEl = document.getElementById("jpWord");
-    const romajiHintEl = document.getElementById("romajiHint");
-    const kanaHintEl = document.getElementById("kanaHint");
-    const userInputEl = document.getElementById("userInput");
-    const matchStatus = document.getElementById("matchStatus");
-    const errorDetail = document.getElementById("errorDetail");
-    const prefixHint = document.getElementById("prefixHint");
-    const correctCountEl = document.getElementById("correctCount");
-    const wrongCountEl = document.getElementById("wrongCount");
-    const progressCountEl = document.getElementById("progressCount");
-    const totalQSpan = document.getElementById("totalQ");
-    const scoreValueEl = document.getElementById("scoreValue");
-    const roundNumEl = document.getElementById("roundNum");
-    const modeTextSpan = document.getElementById("modeText");
-    const roundInfoSpan = document.getElementById("roundInfo");
-    const startPauseBtn = document.getElementById("startPauseBtn");
-    const resetGameBtn = document.getElementById("resetGameBtn");
-    const submitBtn = document.getElementById("submitBtn");
-    const romajiTeddyBtn = document.getElementById("romajiTeddyBtn");
-    const kanaTeddyBtn = document.getElementById("kanaTeddyBtn");
-    const addToFavoriteBtn = document.getElementById("addToFavoriteBtn");
-    const clearFavoritesBtn = document.getElementById("clearFavoritesBtn");
-    const reviewWrongBankBtn = document.getElementById("reviewWrongBankBtn");
-    const wrongListDiv = document.getElementById("wrongList");
-    const favoriteListDiv = document.getElementById("favoriteList");
-    const testedCountSpan = document.getElementById("testedCount");
-    const remainingCountSpan = document.getElementById("remainingCount");
-    const progressFill = document.getElementById("progressFill");
+    const jpWordEl = document.getElementById("jpWord"), romajiHintEl = document.getElementById("romajiHint"), kanaHintEl = document.getElementById("kanaHint");
+    const userInputEl = document.getElementById("userInput"), matchStatus = document.getElementById("matchStatus"), errorDetail = document.getElementById("errorDetail");
+    const prefixHint = document.getElementById("prefixHint"), correctCountEl = document.getElementById("correctCount"), wrongCountEl = document.getElementById("wrongCount");
+    const progressCountEl = document.getElementById("progressCount"), totalQSpan = document.getElementById("totalQ"), scoreValueEl = document.getElementById("scoreValue");
+    const roundNumEl = document.getElementById("roundNum"), modeTextSpan = document.getElementById("modeText"), roundInfoSpan = document.getElementById("roundInfo");
+    const startPauseBtn = document.getElementById("startPauseBtn"), resetGameBtn = document.getElementById("resetGameBtn"), submitBtn = document.getElementById("submitBtn");
+    const romajiTeddyBtn = document.getElementById("romajiTeddyBtn"), kanaTeddyBtn = document.getElementById("kanaTeddyBtn");
+    const addToFavoriteBtn = document.getElementById("addToFavoriteBtn"), clearFavoritesBtn = document.getElementById("clearFavoritesBtn"), reviewWrongBankBtn = document.getElementById("reviewWrongBankBtn");
+    const wrongListDiv = document.getElementById("wrongList"), favoriteListDiv = document.getElementById("favoriteList");
+    const testedCountSpan = document.getElementById("testedCount"), remainingCountSpan = document.getElementById("remainingCount"), progressFill = document.getElementById("progressFill");
 
     function updateLibraryProgress() {
-        const total = masterWordList.length;
-        const testedWords = localStorage.getItem("japanese_testedWords_" + currentLevel);
-        const testedSet = new Set(testedWords ? JSON.parse(testedWords) : []);
-        const tested = testedSet.size;
+        let total = masterWordList.length;
+        let tested = JSON.parse(localStorage.getItem("japanese_tested_" + currentLevel) || "[]").length;
         testedCountSpan.innerText = `📖 已测试: ${tested}词`;
         remainingCountSpan.innerText = `📚 剩余: ${total - tested}词`;
         progressFill.style.width = total > 0 ? (tested / total * 100) + "%" : "0%";
     }
-
     function markWordAsTested(word) {
-        const key = "japanese_testedWords_" + currentLevel;
-        let tested = localStorage.getItem(key);
-        let testedArr = tested ? JSON.parse(tested) : [];
-        if(!testedArr.includes(word.jp)) {
-            testedArr.push(word.jp);
-            localStorage.setItem(key, JSON.stringify(testedArr));
-            updateLibraryProgress();
-        }
+        let tested = JSON.parse(localStorage.getItem("japanese_tested_" + currentLevel) || "[]");
+        if(!tested.includes(word.jp)) { tested.push(word.jp); localStorage.setItem("japanese_tested_" + currentLevel, JSON.stringify(tested)); updateLibraryProgress(); }
     }
-
-    function updateHintVisibility() {
-        if (romajiVisible) romajiHintEl.classList.remove("blurred");
-        else romajiHintEl.classList.add("blurred");
-        if (kanaVisible) kanaHintEl.classList.remove("blurred");
-        else kanaHintEl.classList.add("blurred");
-    }
-
+    function updateHintVisibility() { romajiHintEl.classList.toggle("blurred", !romajiVisible); kanaHintEl.classList.toggle("blurred", !kanaVisible); }
     function updateModeDisplay() {
-        if (!gameActive || isPaused) {
-            modeTextSpan.innerText = isPaused ? "⏸ 暂停中" : "未开始";
-            modeTextSpan.className = "mode-normal";
-            roundInfoSpan.innerText = "";
-            return;
-        }
-        if (currentMode === "normal") {
-            modeTextSpan.innerText = "📖 新词学习";
-            modeTextSpan.className = "
+        if (!gameActive || isPaused) { modeTextSpan.innerText = isPaused ? "⏸ 暂停" : "未开始"; roundInfoSpan.innerText = ""; return; }
+        if (currentMode === "normal") { modeTextSpan.innerText = "📖 新词学习"; roundInfoSpan.innerText = ""; }
+        else if (currentMode === "review") { modeTextSpan.innerText = `🔄 复习 (${currentRoundNum}/3轮)`; roundInfoSpan.innerText = `剩余:${currentRoundQuestions.length}`; }
+        else { modeTextSpan.innerText = "📕 错题本复习"; roundInfoSpan.innerText = `剩余:${currentRoundQuestions.length}`; }
+        roundNumEl.innerText = currentMode === "review" ? currentRoundNum : 0;
+    }
+    function updatePrefixHint() {
+        if (!gameActive || isPaused || !currentWordObj) { prefixHint.innerHTML = "💡 输入罗马音后显示前缀匹配"; prefixHint.className = "prefix-hint"; return; }
+        let input = userInputEl.value.toLowerCase(), target = currentWordObj.romaji.toLowerCase();
+        if (input.length === 0) prefixHint.innerHTML = "💡 输入罗马音后显示前缀匹配";
+        else if (target === input) { prefixHint.innerHTML = `✅ 完美匹配！可提交`; prefixHint.className = "prefix-hint correct"; }
+        else if (target.startsWith(input)) { prefixHint.innerHTML = `🎯 前缀匹配 (${input})`; prefixHint.className = "prefix-hint correct"; }
+        else { prefixHint.innerHTML = `❌ 错误，正确以 "${target.slice(0,4)}..." 开头`; prefixHint.className = "prefix-hint wrong"; }
+    }
+    function saveWrongBank() { localStorage.setItem("japanese_wrongBank", JSON.stringify(wrongBank)); updateBanksUI(); }
+    function saveFavBank() { localStorage.setItem("japanese_favoriteBank", JSON.stringify(favoriteBank)); updateBanksUI(); }
+    function updateBanksUI() {
+        wrongListDiv.innerHTML = wrongBank.length ? wrongBank.map((w,idx)=>`<div class="bank-item">${w.jp} (${w.romaji}) <button class="remove-btn" data-type="wrong" data-idx="${idx}">❌</button></div>`).join('') : '<div style="color:#666;">暂无错题</div>';
+        favoriteListDiv.innerHTML = favoriteBank.length ? favoriteBank.map((f,idx)=>`<div class="bank

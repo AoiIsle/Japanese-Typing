@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>日语打字道场 - N2</title>
+    <title>日语打字道场 - N2完全版</title>
     
-    <!-- ========== 图标配置（添加到主屏幕时使用） ========== -->
+    <!-- ========== App 图标（添加到主屏幕时使用） ========== -->
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
     <link rel="apple-touch-icon" href="apple-icon.png">
@@ -82,6 +82,11 @@
             cursor: pointer;
             font-size: 0.85rem;
             transition: 0.2s;
+        }
+
+        .level-main-btn:hover {
+            background: #eab308;
+            transform: scale(0.97);
         }
 
         .level-dropdown-content {
@@ -162,9 +167,18 @@
             font-size: 0.85rem;
         }
 
+        .control-btn:hover {
+            background: #eab308;
+            transform: scale(0.97);
+        }
+
         .reset-btn {
             background: #475569;
             color: white;
+        }
+
+        .reset-btn:hover {
+            background: #334155;
         }
 
         .mode-indicator {
@@ -236,6 +250,10 @@
             padding: 0;
         }
 
+        .teddy-btn:hover {
+            transform: scale(1.1);
+        }
+
         .input-area {
             background: #1e293b;
             border-radius: 60px;
@@ -275,6 +293,11 @@
             font-size: 0.9rem;
         }
 
+        .submit-btn:hover {
+            background: #eab308;
+            transform: scale(0.97);
+        }
+
         .progress-feedback {
             background: #0f172a;
             border-radius: 40px;
@@ -287,8 +310,14 @@
             gap: 8px;
         }
 
-        .match-status { color: #cbd5e1; }
-        .error-detail { color: #f87171; }
+        .match-status {
+            color: #cbd5e1;
+        }
+
+        .error-detail {
+            color: #f87171;
+            font-size: 0.85rem;
+        }
 
         .prefix-hint {
             color: #94a3b8;
@@ -320,6 +349,7 @@
         .stat-label {
             font-size: 0.6rem;
             color: #94a3b8;
+            margin-bottom: 4px;
         }
 
         .stat-value {
@@ -381,6 +411,12 @@
             color: white;
             cursor: pointer;
             font-size: 0.8rem;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #475569;
+            transform: scale(0.97);
         }
 
         .word-banks {
@@ -405,6 +441,7 @@
             font-size: 0.8rem;
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
 
         .bank-list {
@@ -415,6 +452,11 @@
         .bank-item {
             padding: 3px 5px;
             border-bottom: 1px solid #334155;
+            cursor: pointer;
+        }
+
+        .bank-item:hover {
+            background: #1e293b;
         }
 
         .remove-btn {
@@ -433,6 +475,13 @@
             color: #5b6e8c;
             margin-top: 12px;
         }
+
+        @media (max-width: 600px) {
+            .game-container { padding: 15px; }
+            .jp-word { font-size: 2.2rem; }
+            .stat-value { font-size: 1rem; }
+            .control-btn, .level-main-btn { padding: 4px 12px; font-size: 0.75rem; }
+        }
     </style>
 </head>
 <body>
@@ -444,7 +493,7 @@
     <div class="control-bar">
         <div class="level-dropdown">
             <button class="level-main-btn" id="levelMainBtn">📖 N2词库 ▼</button>
-            <div class="level-dropdown-content">
+            <div class="level-dropdown-content" id="levelDropdown">
                 <button data-level="N5">N5 (待添加)</button>
                 <button data-level="N4">N4 (待添加)</button>
                 <button data-level="N3">N3 (待添加)</button>
@@ -453,11 +502,11 @@
             </div>
         </div>
         <div class="game-config">
-            <label>📝 题数:</label>
+            <label>📝 本轮题数:</label>
             <input type="number" id="questionCount" value="10" min="1" max="50">
         </div>
         <div class="game-control-buttons">
-            <button class="control-btn" id="startPauseBtn">▶ 开始</button>
+            <button class="control-btn" id="startPauseBtn">▶ 开始游戏</button>
             <button class="control-btn reset-btn" id="resetGameBtn">🔄 重置</button>
         </div>
     </div>
@@ -471,34 +520,55 @@
         <div class="jp-word" id="jpWord">日本語</div>
         <div class="hint-area">
             <div class="hint-item">
-                <button class="teddy-btn" id="romajiTeddyBtn">🐕‍🦺</button>
+                <button class="teddy-btn" id="romajiTeddyBtn" title="咖啡泰迪 - 罗马音提示">
+                    <span class="teddy-icon">🐕‍🦺</span>
+                    <span style="font-size:0.7rem;">罗马音</span>
+                </button>
                 <div class="hint-content blurred" id="romajiHint">nihongo</div>
             </div>
             <div class="hint-item">
-                <button class="teddy-btn" id="kanaTeddyBtn">🐩</button>
+                <button class="teddy-btn" id="kanaTeddyBtn" title="灰白泰迪 - 假名读音">
+                    <span class="teddy-icon">🐩</span>
+                    <span style="font-size:0.7rem;">假名读</span>
+                </button>
                 <div class="hint-content blurred" id="kanaHint">にほんご</div>
             </div>
         </div>
     </div>
 
     <div class="input-area">
-        <span style="color:#94a3b8">⌨️ 罗马音:</span>
+        <span style="color:#94a3b8">⌨️ 输入罗马音:</span>
         <input type="text" id="userInput" placeholder="例: nihongo" autocomplete="off">
         <button class="submit-btn" id="submitBtn">↵ 提交</button>
     </div>
 
     <div class="progress-feedback">
-        <div class="match-status" id="matchStatus">✨ 点击开始</div>
+        <div class="match-status" id="matchStatus">✨ 点击开始游戏</div>
         <div class="error-detail" id="errorDetail"></div>
     </div>
-    <div class="prefix-hint" id="prefixHint">💡 输入罗马音后显示前缀匹配</div>
+    <div class="prefix-hint" id="prefixHint">💡 输入罗马音后，这里会显示前缀匹配情况</div>
 
     <div class="stats">
-        <div class="stat-card"><div class="stat-label">✅正确</div><div class="stat-value correct" id="correctCount">0</div></div>
-        <div class="stat-card"><div class="stat-label">❌错误</div><div class="stat-value wrong" id="wrongCount">0</div></div>
-        <div class="stat-card"><div class="stat-label">📊进度</div><div class="stat-value progress" id="progressCount">0/<span id="totalQ">0</span></div></div>
-        <div class="stat-card"><div class="stat-label">🔄轮次</div><div class="stat-value round" id="roundNum">0</div></div>
-        <div class="stat-card"><div class="stat-label">⭐得分</div><div class="stat-value score" id="scoreValue">0</div></div>
+        <div class="stat-card">
+            <div class="stat-label">✅ 本轮正确</div>
+            <div class="stat-value correct" id="correctCount">0</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">❌ 本轮错误</div>
+            <div class="stat-value wrong" id="wrongCount">0</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">📊 进度</div>
+            <div class="stat-value progress" id="progressCount">0/<span id="totalQ">0</span></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">🔄 复习轮次</div>
+            <div class="stat-value round" id="roundNum">0</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">⭐ 得分</div>
+            <div class="stat-value score" id="scoreValue">0</div>
+        </div>
     </div>
 
     <div class="library-progress">
@@ -508,19 +578,26 @@
     </div>
 
     <div class="button-group">
-        <button id="addToFavoriteBtn">⭐ 收藏</button>
+        <button id="addToFavoriteBtn">⭐ 收藏当前词</button>
         <button id="clearFavoritesBtn">🗑️ 清空收藏</button>
         <button id="reviewWrongBankBtn" style="background:#f97316">📕 复习错题本</button>
     </div>
 
     <div class="word-banks">
-        <div class="bank-panel"><div class="bank-title">📕 错题本</div><div class="bank-list" id="wrongList"></div></div>
-        <div class="bank-panel"><div class="bank-title">⭐ 收藏本</div><div class="bank-list" id="favoriteList"></div></div>
+        <div class="bank-panel">
+            <div class="bank-title">📕 错题本 (三轮后仍未掌握的)</div>
+            <div class="bank-list" id="wrongList"></div>
+        </div>
+        <div class="bank-panel">
+            <div class="bank-title">⭐ 收藏本</div>
+            <div class="bank-list" id="favoriteList"></div>
+        </div>
     </div>
-    <footer>🐕 点狗头显示提示 | 完成整轮后复习错词 | 三轮错误进错题本</footer>
+    <footer>🐕 点狗头显示提示 | 完成整轮后才复习错词 | 连续三轮错误的词进入错题本</footer>
 </div>
 
 <script>
+    // ======================= N2词库 =======================
     const N2_VOCAB = [
         {jp:"関係", romaji:"kankei", kana:"かんけい"},{jp:"禁止", romaji:"kinshi", kana:"きんし"},
         {jp:"注意", romaji:"chuui", kana:"ちゅうい"},{jp:"喫煙", romaji:"kitsuen", kana:"きつえん"},
@@ -583,53 +660,513 @@
     ];
 
     const VOCAB_LIBRARY = { N5: [], N4: [], N3: [], N2: N2_VOCAB, N1: [] };
-    let currentLevel = "N2", masterWordList = [...N2_VOCAB];
-    let currentRoundQuestions = [], currentIndex = 0, currentWordObj = null;
-    let gameActive = false, isPaused = false, currentMode = "normal", currentRoundNum = 1;
-    let correctInRound = 0, wrongInRound = 0, roundScore = 0;
-    let wrongBank = [], favoriteBank = [];
-    let romajiVisible = false, kanaVisible = false;
 
-    const jpWordEl = document.getElementById("jpWord"), romajiHintEl = document.getElementById("romajiHint"), kanaHintEl = document.getElementById("kanaHint");
-    const userInputEl = document.getElementById("userInput"), matchStatus = document.getElementById("matchStatus"), errorDetail = document.getElementById("errorDetail");
-    const prefixHint = document.getElementById("prefixHint"), correctCountEl = document.getElementById("correctCount"), wrongCountEl = document.getElementById("wrongCount");
-    const progressCountEl = document.getElementById("progressCount"), totalQSpan = document.getElementById("totalQ"), scoreValueEl = document.getElementById("scoreValue");
-    const roundNumEl = document.getElementById("roundNum"), modeTextSpan = document.getElementById("modeText"), roundInfoSpan = document.getElementById("roundInfo");
-    const startPauseBtn = document.getElementById("startPauseBtn"), resetGameBtn = document.getElementById("resetGameBtn"), submitBtn = document.getElementById("submitBtn");
-    const romajiTeddyBtn = document.getElementById("romajiTeddyBtn"), kanaTeddyBtn = document.getElementById("kanaTeddyBtn");
-    const addToFavoriteBtn = document.getElementById("addToFavoriteBtn"), clearFavoritesBtn = document.getElementById("clearFavoritesBtn"), reviewWrongBankBtn = document.getElementById("reviewWrongBankBtn");
-    const wrongListDiv = document.getElementById("wrongList"), favoriteListDiv = document.getElementById("favoriteList");
-    const testedCountSpan = document.getElementById("testedCount"), remainingCountSpan = document.getElementById("remainingCount"), progressFill = document.getElementById("progressFill");
+    // 游戏状态
+    let currentLevel = "N2";
+    let masterWordList = [...N2_VOCAB];
+    let currentRoundQuestions = [];
+    let currentIndex = 0;
+    let currentWordObj = null;
+    let gameActive = false;
+    let isPaused = false;
+    let currentMode = "normal";
+    let currentRoundNum = 1;
+    let correctInRound = 0;
+    let wrongInRound = 0;
+    let roundScore = 0;
+    let wrongBank = [];
+    let favoriteBank = [];
+    let romajiVisible = false;
+    let kanaVisible = false;
 
+    // DOM 元素
+    const jpWordEl = document.getElementById("jpWord");
+    const romajiHintEl = document.getElementById("romajiHint");
+    const kanaHintEl = document.getElementById("kanaHint");
+    const userInputEl = document.getElementById("userInput");
+    const matchStatus = document.getElementById("matchStatus");
+    const errorDetail = document.getElementById("errorDetail");
+    const prefixHint = document.getElementById("prefixHint");
+    const correctCountEl = document.getElementById("correctCount");
+    const wrongCountEl = document.getElementById("wrongCount");
+    const progressCountEl = document.getElementById("progressCount");
+    const totalQSpan = document.getElementById("totalQ");
+    const scoreValueEl = document.getElementById("scoreValue");
+    const roundNumEl = document.getElementById("roundNum");
+    const modeTextSpan = document.getElementById("modeText");
+    const roundInfoSpan = document.getElementById("roundInfo");
+    const startPauseBtn = document.getElementById("startPauseBtn");
+    const resetGameBtn = document.getElementById("resetGameBtn");
+    const submitBtn = document.getElementById("submitBtn");
+    const romajiTeddyBtn = document.getElementById("romajiTeddyBtn");
+    const kanaTeddyBtn = document.getElementById("kanaTeddyBtn");
+    const addToFavoriteBtn = document.getElementById("addToFavoriteBtn");
+    const clearFavoritesBtn = document.getElementById("clearFavoritesBtn");
+    const reviewWrongBankBtn = document.getElementById("reviewWrongBankBtn");
+    const wrongListDiv = document.getElementById("wrongList");
+    const favoriteListDiv = document.getElementById("favoriteList");
+    const testedCountSpan = document.getElementById("testedCount");
+    const remainingCountSpan = document.getElementById("remainingCount");
+    const progressFill = document.getElementById("progressFill");
+
+    // 更新词库进度
     function updateLibraryProgress() {
-        let total = masterWordList.length;
-        let tested = JSON.parse(localStorage.getItem("japanese_tested_" + currentLevel) || "[]").length;
+        const total = masterWordList.length;
+        const tested = JSON.parse(localStorage.getItem("japanese_tested_" + currentLevel) || "[]").length;
         testedCountSpan.innerText = `📖 已测试: ${tested}词`;
         remainingCountSpan.innerText = `📚 剩余: ${total - tested}词`;
         progressFill.style.width = total > 0 ? (tested / total * 100) + "%" : "0%";
     }
+
     function markWordAsTested(word) {
         let tested = JSON.parse(localStorage.getItem("japanese_tested_" + currentLevel) || "[]");
-        if(!tested.includes(word.jp)) { tested.push(word.jp); localStorage.setItem("japanese_tested_" + currentLevel, JSON.stringify(tested)); updateLibraryProgress(); }
+        if(!tested.includes(word.jp)) {
+            tested.push(word.jp);
+            localStorage.setItem("japanese_tested_" + currentLevel, JSON.stringify(tested));
+            updateLibraryProgress();
+        }
     }
-    function updateHintVisibility() { romajiHintEl.classList.toggle("blurred", !romajiVisible); kanaHintEl.classList.toggle("blurred", !kanaVisible); }
+
+    function updateHintVisibility() {
+        if (romajiVisible) romajiHintEl.classList.remove("blurred");
+        else romajiHintEl.classList.add("blurred");
+        if (kanaVisible) kanaHintEl.classList.remove("blurred");
+        else kanaHintEl.classList.add("blurred");
+    }
+
     function updateModeDisplay() {
-        if (!gameActive || isPaused) { modeTextSpan.innerText = isPaused ? "⏸ 暂停" : "未开始"; roundInfoSpan.innerText = ""; return; }
-        if (currentMode === "normal") { modeTextSpan.innerText = "📖 新词学习"; roundInfoSpan.innerText = ""; }
-        else if (currentMode === "review") { modeTextSpan.innerText = `🔄 复习 (${currentRoundNum}/3轮)`; roundInfoSpan.innerText = `剩余:${currentRoundQuestions.length}`; }
-        else { modeTextSpan.innerText = "📕 错题本复习"; roundInfoSpan.innerText = `剩余:${currentRoundQuestions.length}`; }
+        if (!gameActive || isPaused) {
+            modeTextSpan.innerText = isPaused ? "⏸ 暂停中" : "未开始";
+            modeTextSpan.className = "mode-normal";
+            roundInfoSpan.innerText = "";
+            return;
+        }
+        if (currentMode === "normal") {
+            modeTextSpan.innerText = "📖 新词学习";
+            modeTextSpan.className = "mode-normal";
+            roundInfoSpan.innerText = "";
+        } else if (currentMode === "review") {
+            modeTextSpan.innerText = `🔄 错词复习 (第${currentRoundNum}/3轮)`;
+            modeTextSpan.className = "mode-review";
+            roundInfoSpan.innerText = `本轮剩余: ${currentRoundQuestions.length}个错词`;
+        } else if (currentMode === "wrongbank") {
+            modeTextSpan.innerText = "📕 错题本复习";
+            modeTextSpan.className = "mode-wrongbank";
+            roundInfoSpan.innerText = `错题本剩余: ${currentRoundQuestions.length}个`;
+        }
         roundNumEl.innerText = currentMode === "review" ? currentRoundNum : 0;
     }
+
     function updatePrefixHint() {
-        if (!gameActive || isPaused || !currentWordObj) { prefixHint.innerHTML = "💡 输入罗马音后显示前缀匹配"; prefixHint.className = "prefix-hint"; return; }
-        let input = userInputEl.value.toLowerCase(), target = currentWordObj.romaji.toLowerCase();
-        if (input.length === 0) prefixHint.innerHTML = "💡 输入罗马音后显示前缀匹配";
-        else if (target === input) { prefixHint.innerHTML = `✅ 完美匹配！可提交`; prefixHint.className = "prefix-hint correct"; }
-        else if (target.startsWith(input)) { prefixHint.innerHTML = `🎯 前缀匹配 (${input})`; prefixHint.className = "prefix-hint correct"; }
-        else { prefixHint.innerHTML = `❌ 错误，正确以 "${target.slice(0,4)}..." 开头`; prefixHint.className = "prefix-hint wrong"; }
+        if (!gameActive || isPaused || !currentWordObj) {
+            prefixHint.innerHTML = "💡 输入罗马音后，这里会显示前缀匹配情况";
+            prefixHint.className = "prefix-hint";
+            return;
+        }
+        const input = userInputEl.value.toLowerCase();
+        const target = currentWordObj.romaji.toLowerCase();
+        
+        if (input.length === 0) {
+            prefixHint.innerHTML = "💡 输入罗马音后，这里会显示前缀匹配情况";
+            prefixHint.className = "prefix-hint";
+        } else if (target === input) {
+            prefixHint.innerHTML = `✅ 完美匹配！可以提交了！`;
+            prefixHint.className = "prefix-hint correct";
+        } else if (target.startsWith(input)) {
+            prefixHint.innerHTML = `🎯 前缀匹配正确 (${input})，继续输入...`;
+            prefixHint.className = "prefix-hint correct";
+        } else {
+            prefixHint.innerHTML = `❌ 前缀不匹配 (${input})，正确罗马音以 "${target.substring(0, Math.min(5, target.length))}..." 开头`;
+            prefixHint.className = "prefix-hint wrong";
+        }
     }
-    function saveWrongBank() { localStorage.setItem("japanese_wrongBank", JSON.stringify(wrongBank)); updateBanksUI(); }
-    function saveFavBank() { localStorage.setItem("japanese_favoriteBank", JSON.stringify(favoriteBank)); updateBanksUI(); }
+
+    function saveWrongBank() {
+        localStorage.setItem("japanese_wrongBank", JSON.stringify(wrongBank));
+        updateBanksUI();
+    }
+
+    function saveFavBank() {
+        localStorage.setItem("japanese_favoriteBank", JSON.stringify(favoriteBank));
+        updateBanksUI();
+    }
+
     function updateBanksUI() {
-        wrongListDiv.innerHTML = wrongBank.length ? wrongBank.map((w,idx)=>`<div class="bank-item">${w.jp} (${w.romaji}) <button class="remove-btn" data-type="wrong" data-idx="${idx}">❌</button></div>`).join('') : '<div style="color:#666;">暂无错题</div>';
-        favoriteListDiv.innerHTML = favoriteBank.length ? favoriteBank.map((f,idx)=>`<div class="bank
+        wrongListDiv.innerHTML = wrongBank.length ? wrongBank.map((w,idx) => 
+            `<div class="bank-item">${w.jp} (${w.romaji}) <button class="remove-btn" data-type="wrong" data-idx="${idx}">❌</button></div>`
+        ).join('') : '<div style="color:#666;">暂无错题</div>';
+        
+        favoriteListDiv.innerHTML = favoriteBank.length ? favoriteBank.map((f,idx) => 
+            `<div class="bank-item">${f.jp} (${f.romaji}) <button class="remove-btn" data-type="fav" data-idx="${idx}">❌</button></div>`
+        ).join('') : '<div style="color:#666;">暂无收藏</div>';
+        
+        document.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const type = btn.dataset.type;
+                const idx = parseInt(btn.dataset.idx);
+                if(type === 'wrong') {
+                    wrongBank.splice(idx,1);
+                    saveWrongBank();
+                } else if(type === 'fav') {
+                    favoriteBank.splice(idx,1);
+                    saveFavBank();
+                }
+            });
+        });
+    }
+
+    function addToWrongBank(word) {
+        if(!wrongBank.find(w => w.jp === word.jp)) {
+            wrongBank.push({jp: word.jp, romaji: word.romaji, kana: word.kana});
+            saveWrongBank();
+        }
+    }
+
+    function addToFavorite() {
+        if(!gameActive || isPaused || !currentWordObj) {
+            matchStatus.innerText = "⚠️ 请先开始游戏！";
+            return;
+        }
+        if(!favoriteBank.find(f => f.jp === currentWordObj.jp)) {
+            favoriteBank.push({jp: currentWordObj.jp, romaji: currentWordObj.romaji, kana: currentWordObj.kana});
+            saveFavBank();
+            matchStatus.innerText = `⭐ 已收藏 ${currentWordObj.jp}`;
+            setTimeout(() => updateGameStatusMsg(), 800);
+        } else {
+            matchStatus.innerText = `⚠️ 已在收藏本中`;
+        }
+    }
+
+    function updateGameStatusMsg() {
+        if(gameActive && !isPaused) matchStatus.innerText = "🎮 游戏中! 输入罗马音后按回车或提交";
+    }
+
+    function startNewGame() {
+        let total = parseInt(document.getElementById("questionCount").value) || 10;
+        let wordPool = [...masterWordList];
+        if(wordPool.length === 0) return;
+        
+        let shuffled = [...wordPool];
+        for(let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        currentRoundQuestions = shuffled.slice(0, Math.min(total, shuffled.length));
+        currentRoundQuestions = currentRoundQuestions.map(q => ({...q, wrongCount: 0}));
+        
+        currentIndex = 0;
+        correctInRound = 0;
+        wrongInRound = 0;
+        roundScore = 0;
+        gameActive = true;
+        isPaused = false;
+        currentMode = "normal";
+        currentRoundNum = 1;
+        
+        updateStatsUI();
+        totalQSpan.innerText = currentRoundQuestions.length;
+        loadCurrentWord();
+        userInputEl.disabled = false;
+        userInputEl.value = "";
+        userInputEl.focus();
+        matchStatus.innerText = "🎮 游戏中! 输入罗马音后按回车或提交";
+        errorDetail.innerText = "";
+        prefixHint.innerHTML = "💡 输入罗马音后，这里会显示前缀匹配情况";
+        prefixHint.className = "prefix-hint";
+        updateModeDisplay();
+        startPauseBtn.innerHTML = "⏸ 暂停";
+    }
+
+    function pauseGame() {
+        if(!gameActive) return;
+        isPaused = true;
+        userInputEl.disabled = true;
+        matchStatus.innerText = "⏸ 游戏已暂停，点击「继续」恢复";
+        startPauseBtn.innerHTML = "▶ 继续";
+        updateModeDisplay();
+    }
+
+    function resumeGame() {
+        if(!gameActive) return;
+        isPaused = false;
+        userInputEl.disabled = false;
+        userInputEl.focus();
+        matchStatus.innerText = "🎮 游戏中! 输入罗马音后按回车或提交";
+        startPauseBtn.innerHTML = "⏸ 暂停";
+        updateModeDisplay();
+        updatePrefixHint();
+    }
+
+    function toggleStartPause() {
+        if(!gameActive) {
+            startNewGame();
+        } else if(isPaused) {
+            resumeGame();
+        } else {
+            pauseGame();
+        }
+    }
+
+    function resetGame() {
+        startNewGame();
+        matchStatus.innerText = "🔄 已重置，开始新的一轮！";
+    }
+
+    function startReviewRound() {
+        let wrongWords = currentRoundQuestions.filter(q => q.wrongCount > 0);
+        if(wrongWords.length === 0) {
+            matchStatus.innerText = "🎉 本轮没有错词！太棒了！";
+            return;
+        }
+        
+        currentRoundQuestions = wrongWords.map(w => ({...w, wrongCount: 0}));
+        currentIndex = 0;
+        correctInRound = 0;
+        wrongInRound = 0;
+        roundScore = 0;
+        gameActive = true;
+        isPaused = false;
+        currentMode = "review";
+        currentRoundNum++;
+        
+        totalQSpan.innerText = currentRoundQuestions.length;
+        updateStatsUI();
+        loadCurrentWord();
+        userInputEl.disabled = false;
+        userInputEl.value = "";
+        userInputEl.focus();
+        matchStatus.innerText = `📚 第${currentRoundNum}轮复习！全部答对即可通关`;
+        errorDetail.innerText = "";
+        updateModeDisplay();
+        startPauseBtn.innerHTML = "⏸ 暂停";
+    }
+
+    function startWrongBankReview() {
+        if(wrongBank.length === 0) {
+            matchStatus.innerText = "📕 错题本为空！";
+            return;
+        }
+        
+        currentRoundQuestions = wrongBank.map(w => ({...w, wrongCount: 0}));
+        currentIndex = 0;
+        correctInRound = 0;
+        wrongInRound = 0;
+        roundScore = 0;
+        gameActive = true;
+        isPaused = false;
+        currentMode = "wrongbank";
+        
+        totalQSpan.innerText = currentRoundQuestions.length;
+        updateStatsUI();
+        loadCurrentWord();
+        userInputEl.disabled = false;
+        userInputEl.value = "";
+        userInputEl.focus();
+        matchStatus.innerText = "📕 错题本复习模式！";
+        errorDetail.innerText = "";
+        updateModeDisplay();
+        startPauseBtn.innerHTML = "⏸ 暂停";
+    }
+
+    function loadCurrentWord() {
+        if(!gameActive || currentIndex >= currentRoundQuestions.length) {
+            endRound();
+            return;
+        }
+        currentWordObj = currentRoundQuestions[currentIndex];
+        jpWordEl.innerText = currentWordObj.jp;
+        romajiHintEl.innerText = currentWordObj.romaji;
+        kanaHintEl.innerText = currentWordObj.kana || currentWordObj.romaji;
+        userInputEl.value = "";
+        updatePrefixHint();
+        if(gameActive && !isPaused) {
+            matchStatus.innerText = "🎮 游戏中! 输入罗马音后按回车或提交";
+        }
+        errorDetail.innerText = "";
+    }
+
+    function submitAnswer() {
+        if (!gameActive || isPaused || !currentWordObj) {
+            matchStatus.innerText = "⚠️ 请先开始游戏！";
+            return;
+        }
+        
+        const userAnswer = userInputEl.value.trim().toLowerCase();
+        const correctAnswer = currentWordObj.romaji.toLowerCase();
+        
+        if (userAnswer === correctAnswer) {
+            correctInRound++;
+            roundScore += 10;
+            markWordAsTested(currentWordObj);
+            
+            matchStatus.innerText = `✅ 正确！ +10分`;
+            errorDetail.innerText = "";
+            userInputEl.value = "";
+            
+            currentIndex++;
+            updateStatsUI();
+            
+            if (currentIndex < currentRoundQuestions.length) {
+                loadCurrentWord();
+            } else {
+                endRound();
+            }
+        } else {
+            let currentQ = currentRoundQuestions[currentIndex];
+            currentQ.wrongCount = (currentQ.wrongCount || 0) + 1;
+            wrongInRound++;
+            updateStatsUI();
+            
+            matchStatus.innerText = `❌ 错误！正确答案是: ${correctAnswer}`;
+            errorDetail.innerText = `🔁 请重新输入，本题还有机会`;
+            userInputEl.focus();
+        }
+        updatePrefixHint();
+    }
+
+    function updateStatsUI() {
+        correctCountEl.innerText = correctInRound;
+        wrongCountEl.innerText = wrongInRound;
+        progressCountEl.innerHTML = `${currentIndex}/${currentRoundQuestions.length}`;
+        scoreValueEl.innerText = roundScore;
+    }
+
+    function endRound() {
+        let wrongWords = currentRoundQuestions.filter(q => q.wrongCount > 0);
+        
+        if (wrongWords.length === 0) {
+            if (currentMode === "review") {
+                gameActive = false;
+                isPaused = false;
+                matchStatus.innerText = `🎉 恭喜！第${currentRoundNum}轮复习全部正确！🎉`;
+                errorDetail.innerText = `本轮正确率: 100%`;
+                userInputEl.disabled = true;
+                updateModeDisplay();
+                startPauseBtn.innerHTML = "▶ 开始游戏";
+            } else if (currentMode === "normal") {
+                gameActive = false;
+                isPaused = false;
+                matchStatus.innerText = `🎉 恭喜！本轮全部正确！🎉`;
+                errorDetail.innerText = `得分: ${roundScore} | 正确率: 100%`;
+                userInputEl.disabled = true;
+                updateModeDisplay();
+                startPauseBtn.innerHTML = "▶ 开始游戏";
+            } else if (currentMode === "wrongbank") {
+                gameActive = false;
+                isPaused = false;
+                matchStatus.innerText = `🎉 错题本复习完成！`;
+                errorDetail.innerText = `全部正确！`;
+                userInputEl.disabled = true;
+                updateModeDisplay();
+                startPauseBtn.innerHTML = "▶ 开始游戏";
+                let currentJps = currentRoundQuestions.map(q => q.jp);
+                wrongBank = wrongBank.filter(w => !currentJps.includes(w.jp));
+                saveWrongBank();
+            }
+        } else {
+            if (currentMode === "normal") {
+                matchStatus.innerText = `📚 本轮有${wrongWords.length}个错词，进入第1轮复习...`;
+                startReviewRound();
+            } else if (currentMode === "review") {
+                if (currentRoundNum < 3) {
+                    matchStatus.innerText = `📚 第${currentRoundNum}轮复习有${wrongWords.length}个错词，进入第${currentRoundNum+1}轮复习...`;
+                    startReviewRound();
+                } else {
+                    wrongWords.forEach(w => addToWrongBank(w));
+                    gameActive = false;
+                    isPaused = false;
+                    matchStatus.innerText = `📕 三轮复习后仍有${wrongWords.length}个词未掌握，已放入错题本`;
+                    errorDetail.innerText = `可以在下方错题本中继续复习`;
+                    userInputEl.disabled = true;
+                    updateModeDisplay();
+                    startPauseBtn.innerHTML = "▶ 开始游戏";
+                }
+            } else if (currentMode === "wrongbank") {
+                gameActive = false;
+                isPaused = false;
+                matchStatus.innerText = `📕 错题本复习：${wrongWords.length}个词仍需加强，已保留在错题本`;
+                errorDetail.innerText = `可以继续从错题本复习`;
+                userInputEl.disabled = true;
+                updateModeDisplay();
+                startPauseBtn.innerHTML = "▶ 开始游戏";
+            }
+        }
+    }
+
+    function switchLevel(level) {
+        currentLevel = level;
+        const newWordList = VOCAB_LIBRARY[level] || [];
+        if(newWordList.length === 0) {
+            matchStatus.innerText = `⚠️ ${level}词库暂未添加，请等待后续更新`;
+            masterWordList = [];
+            userInputEl.disabled = true;
+        } else {
+            masterWordList = [...newWordList];
+            matchStatus.innerText = `✅ 已切换到${level}词库，共${masterWordList.length}个单词`;
+        }
+        updateLibraryProgress();
+        document.querySelectorAll('.level-dropdown-content button').forEach(btn => {
+            if(btn.dataset.level === level) {
+                btn.classList.add('active-level');
+            } else {
+                btn.classList.remove('active-level');
+            }
+        });
+        document.getElementById("levelMainBtn").innerHTML = `📖 ${level}词库 ▼`;
+    }
+
+    // 事件绑定
+    userInputEl.addEventListener("input", updatePrefixHint);
+    
+    userInputEl.addEventListener("keypress", (e) => {
+        if (e.key === "Enter" && gameActive && !isPaused) {
+            e.preventDefault();
+            submitAnswer();
+        }
+    });
+    
+    submitBtn.addEventListener("click", () => {
+        if (gameActive && !isPaused) submitAnswer();
+    });
+    
+    startPauseBtn.addEventListener("click", toggleStartPause);
+    resetGameBtn.addEventListener("click", resetGame);
+    
+    romajiTeddyBtn.addEventListener("click", () => {
+        romajiVisible = !romajiVisible;
+        updateHintVisibility();
+    });
+    
+    kanaTeddyBtn.addEventListener("click", () => {
+        kanaVisible = !kanaVisible;
+        updateHintVisibility();
+    });
+    
+    addToFavoriteBtn.addEventListener("click", addToFavorite);
+    clearFavoritesBtn.addEventListener("click", () => { favoriteBank = []; saveFavBank(); matchStatus.innerText = "⭐ 收藏本已清空"; });
+    reviewWrongBankBtn.addEventListener("click", startWrongBankReview);
+    
+    document.querySelectorAll('.level-dropdown-content button').forEach(btn => {
+        btn.addEventListener("click", () => {
+            const level = btn.dataset.level;
+            switchLevel(level);
+        });
+    });
+    
+    // 初始化
+    updateHintVisibility();
+    loadStorage();
+    userInputEl.disabled = true;
+    
+    function loadStorage() {
+        const savedWrong = localStorage.getItem("japanese_wrongBank");
+        const savedFav = localStorage.getItem("japanese_favoriteBank");
+        if(savedWrong) wrongBank = JSON.parse(savedWrong);
+        if(savedFav) favoriteBank = JSON.parse(savedFav);
+        updateBanksUI();
+        updateLibraryProgress();
+    }
+</script>
+</body>
+</html>
